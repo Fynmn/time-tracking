@@ -47,9 +47,15 @@ const groupEntriesByWeekDescending = (entries) => {
 };
 
 // Step 6: Parse data from local storage.
-const parsedGroupEntriesByWeekDescending = groupEntriesByWeekDescending(
-  JSON.parse(localStorage.getItem("timeEntries"))
-);
+// const parsedGroupEntriesByWeekDescending =
+//   groupEntriesByWeekDescending(timeEntries);
+
+function parsedGroupEntriesByWeekDescending() {
+  if (!localStorage.getItem("timeEntries")) return null;
+  return groupEntriesByWeekDescending(
+    JSON.parse(localStorage.getItem("timeEntries"))
+  );
+}
 
 const App = () => {
   return (
@@ -68,30 +74,31 @@ const App = () => {
             2
           )} */}
           <div className="flex flex-col flex-wrap gap-y-8">
-            {parsedGroupEntriesByWeekDescending.map((array, index) => (
-              <div key={index} className="">
-                <div>
-                  {index === 0 ? (
-                    <p className="text-darkGray font-medium text-base">
-                      This week
-                    </p>
-                  ) : index === 1 ? (
-                    <p className="text-darkGray font-medium text-base">
-                      {index} week ago
-                    </p>
-                  ) : (
-                    <p className="text-darkGray font-medium text-base">
-                      {index} weeks ago
-                    </p>
-                  )}
+            {localStorage.getItem("timeEntries") &&
+              parsedGroupEntriesByWeekDescending().map((array, index) => (
+                <div key={index} className="">
+                  <div>
+                    {index === 0 ? (
+                      <p className="text-darkGray font-medium text-base">
+                        This week
+                      </p>
+                    ) : index === 1 ? (
+                      <p className="text-darkGray font-medium text-base">
+                        {index} week ago
+                      </p>
+                    ) : (
+                      <p className="text-darkGray font-medium text-base">
+                        {index} weeks ago
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex flex-wrap gap-x-8 gap-y-4">
+                    {array.map((item, itemIndex) => (
+                      <TaskCard key={itemIndex} {...item}></TaskCard>
+                    ))}
+                  </div>
                 </div>
-                <div className="flex flex-wrap gap-x-8 gap-y-4">
-                  {array.map((item, itemIndex) => (
-                    <TaskCard key={itemIndex} {...item}></TaskCard>
-                  ))}
-                </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       </div>
