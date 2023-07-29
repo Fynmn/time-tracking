@@ -1,4 +1,5 @@
 import DoughnutChart from "../components/DoughnutChart";
+import DropDownProfile from "../components/DropDownProfile";
 import SideBar from "../components/SideBar";
 import TaskCard from "../components/TaskCard";
 import TimeEntryForm from "../components/TimeEntryForm";
@@ -94,8 +95,14 @@ const Dashboard = () => {
           <div className="flex justify-center md:hidden mb-8">
             <TimeEntryForm></TimeEntryForm>
           </div>
-          <div className="text-accent text-2xl font-bold mb-4">
-            Time Entries
+          <div className="flex">
+            <div className="text-accent text-2xl font-bold mb-4">
+              Time Entries
+            </div>
+            <div className="flex-1"></div>
+            <div>
+              <DropDownProfile></DropDownProfile>
+            </div>
           </div>
           {/* {JSON.stringify(
             JSON.parse(localStorage.getItem("timeEntries")),
