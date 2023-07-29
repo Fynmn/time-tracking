@@ -9,7 +9,7 @@ const PieChart = ({ values }) => {
     labels: ["Project 1", "Project 2", "Project 3"],
     datasets: [
       {
-        label: "My First Dataset",
+        label: "Hours",
         data: values,
         backgroundColor: [
           "rgb(25, 110, 230)",
