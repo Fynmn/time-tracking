@@ -2,7 +2,38 @@
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+# Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+:exclamation:Important: Make sure that `pnpm` is installed.
+
+- First, clone this application with
+
+```
+git clone https://github.com/Fynmn/time-tracking.git
+```
+
+or if you want to get fancy, you can copy the SSH link however you want.
+
+- Once it's cloned, go to the directory of this application:
+
+```
+cd time-tracking
+```
+
+- Then install all the dependecies:
+
+```
+pnpm install
+```
+
+- Now you can run the development server:
+
+```
+pnpm run dev
+```
+
+- You can explore the app on:
+
+```
+http://localhost:5174/
+```
