@@ -91,16 +91,15 @@ const Dashboard = () => {
         <div className="hidden md:block min-h-screen bg-lightGray">
           <SideBar></SideBar>
         </div>
-        <div className="flex flex-col px-8 py-[32px]">
+        <div className="flex flex-col px-8 py-[32px] w-full">
           <div className="flex justify-center md:hidden mb-8">
             <TimeEntryForm></TimeEntryForm>
           </div>
-          <div className="flex">
-            <div className="text-accent text-2xl font-bold mb-4">
+          <div className="flex items-center mb-4">
+            <div className="flex-grow text-accent text-2xl font-bold ">
               Time Entries
             </div>
-            <div className="flex-1"></div>
-            <div>
+            <div className="flex justify-end">
               <DropDownProfile></DropDownProfile>
             </div>
           </div>
