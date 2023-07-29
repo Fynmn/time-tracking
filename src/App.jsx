@@ -1,8 +1,8 @@
-import Dashboard from "./pages/Dashboard";
-import Login from "./pages/login";
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Signup from "./pages/signup";
+
+import Dashboard from "./pages/Dashboard";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 const router = createBrowserRouter([
   {
