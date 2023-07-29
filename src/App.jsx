@@ -1,7 +1,12 @@
+import SideNavbar from "./components/SideNavBar";
+
 const App = () => {
   return (
     <>
-      <div className="text-center bg-red-300 w-full text-3xl">Hello world</div>
+      <div className="flex">
+        <SideNavbar></SideNavbar>
+        <div>Hello</div>
+      </div>
     </>
   );
 };
