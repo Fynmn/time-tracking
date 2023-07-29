@@ -2,7 +2,7 @@
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
----
+<br>
 
 <div align="center">
   <img src="https://github.com/Fynmn/.github-images/blob/main/laptop_dashboard.png"/>
@@ -24,14 +24,12 @@ This template provides a minimal setup to get React working in Vite with HMR and
 
 <div align="center">
   <span>
-      <img src="https://github.com/Fynmn/.github-images/blob/main/mobile_view_1.png" width="350"/>
       <img src="https://github.com/Fynmn/.github-images/blob/main/mobile_view_2.png" width="350"/>
+      <img src="https://github.com/Fynmn/.github-images/blob/main/mobile_view_1.png" width="350"/>
   </span>
 </div>
 
 <br>
-
----
 
 # Getting Started
 
