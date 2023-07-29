@@ -59,23 +59,39 @@ const App = () => {
           <SideBar></SideBar>
         </div>
         <div className="flex flex-col px-8 py-[32px]">
-          {JSON.stringify(parsedGroupEntriesByWeekDescending)}
           <div className="text-accent text-2xl font-bold mb-4">
             Time Entries
           </div>
-          <div className="flex flex-wrap gap-x-8 gap-y-4">
-            <TaskCard
-              hours={1}
-              desc={"I created a TaskCard component"}
-              project={"Project 1"}
-              timeStamp={"2023-07-29T05:34:45.391Z"}
-            ></TaskCard>
-            <TaskCard
-              hours={0.5}
-              desc={"I created a Button component"}
-              project={"Project 1"}
-              timeStamp={"2023-07-29T05:34:45.391Z"}
-            ></TaskCard>
+          {/* {JSON.stringify(
+            JSON.parse(localStorage.getItem("timeEntries")),
+            null,
+            2
+          )} */}
+          <div className="flex flex-col flex-wrap gap-y-8">
+            {parsedGroupEntriesByWeekDescending.map((array, index) => (
+              <div key={index} className="">
+                <div>
+                  {index === 0 ? (
+                    <p className="text-darkGray font-medium text-base">
+                      This week
+                    </p>
+                  ) : index === 1 ? (
+                    <p className="text-darkGray font-medium text-base">
+                      {index} week ago
+                    </p>
+                  ) : (
+                    <p className="text-darkGray font-medium text-base">
+                      {index} weeks ago
+                    </p>
+                  )}
+                </div>
+                <div className="flex flex-wrap gap-x-8 gap-y-4">
+                  {array.map((item, itemIndex) => (
+                    <TaskCard key={itemIndex} {...item}></TaskCard>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
