@@ -4,7 +4,17 @@ import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const PieChart = ({ values }) => {
+const DoughnutChart = ({ values }) => {
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        position: "left",
+      },
+    },
+  };
+
   const data = {
     labels: ["Project 1", "Project 2", "Project 3"],
     datasets: [
@@ -23,9 +33,9 @@ const PieChart = ({ values }) => {
 
   return (
     <>
-      <Doughnut data={data} />
+      <Doughnut className="" data={data} options={options} />
     </>
   );
 };
 
-export default PieChart;
+export default DoughnutChart;
