@@ -2,6 +2,7 @@
 import FlatShadowCard from "./FlatShadowCard";
 import { MdTaskAlt as TaskIcon } from "react-icons/md";
 import { AiOutlineClockCircle as HoursIcon } from "react-icons/ai";
+import { format } from "fecha";
 
 const TaskCard = ({ hours, desc, project, timeStamp }) => {
   return (
@@ -40,7 +41,7 @@ const TaskCard = ({ hours, desc, project, timeStamp }) => {
               className="font-normal text-sm md:text-base"
               style={{ color: "#ADB6C3" }}
             >
-              {timeStamp}
+              {format(new Date(timeStamp), "MMMM DD, YYYY, hh:mm A")}
             </p>
           </div>
         </div>
