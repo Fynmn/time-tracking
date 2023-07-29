@@ -99,7 +99,7 @@ const SideBar = () => {
         <div className="bg-lightGray h-full">
           <div className="flex flex-col px-8 pt-8 pb-4 gap-y-5">
             <div className="">
-              <h1 className="text-primary text-2xl font-bold">
+              <h1 className="text-primary text-2xl font-black">
                 Time Tracking App
               </h1>
               <h2 className="text-darkGray text-base font-normal">
