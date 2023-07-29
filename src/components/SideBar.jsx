@@ -5,6 +5,7 @@ import Tippy from "@tippyjs/react";
 import { followCursor } from "tippy.js";
 import { CgPushChevronLeft as CloseIcon } from "react-icons/cg";
 import ShortcutToolTip from "./ShortcutToolTip";
+import TimeEntryForm from "./TimeEntryForm";
 
 const SideBar = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -95,7 +96,19 @@ const SideBar = () => {
           </button>
         </ShortcutToolTip>
 
-        <div className="bg-primary min-h-screen"></div>
+        <div className="bg-lightGray h-full min-h-screen">
+          <div className="flex flex-col px-8 pt-8 pb-4 gap-y-5">
+            <div className="">
+              <h1 className="text-primary text-2xl font-bold">
+                Time Tracking App
+              </h1>
+              <h2 className="text-darkGray text-base font-normal">
+                Make an entry, track your hours!
+              </h2>
+            </div>
+            <TimeEntryForm></TimeEntryForm>
+          </div>
+        </div>
       </Resizable>
     </div>
   );
