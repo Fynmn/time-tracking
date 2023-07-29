@@ -1,3 +1,4 @@
+import PieChart from "./components/PieChart";
 import SideBar from "./components/SideBar";
 import TaskCard from "./components/TaskCard";
 
@@ -93,6 +94,9 @@ const App = () => {
                     )}
                   </div>
                   <div className="flex flex-wrap gap-x-8 gap-y-4">
+                    <div className="max-h-fit max-w-[200px] ">
+                      <PieChart values={[300, 50, 100]}></PieChart>
+                    </div>
                     {array.map((item, itemIndex) => (
                       <TaskCard key={itemIndex} {...item}></TaskCard>
                     ))}
