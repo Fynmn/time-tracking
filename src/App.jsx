@@ -1,6 +1,7 @@
 import DoughnutChart from "./components/DoughnutChart";
 import SideBar from "./components/SideBar";
 import TaskCard from "./components/TaskCard";
+import TimeEntryForm from "./components/TimeEntryForm";
 
 // Step 1: Parse the timestamp string into a JavaScript Date object.
 const parseTimestamp = (timestamp) => {
@@ -79,11 +80,20 @@ function parsedGroupEntriesByWeekDescending() {
 const App = () => {
   return (
     <>
+      <div className="flex flex-col items-center w-full bg-accent py-8 md:hidden">
+        <h1 className="text-white text-2xl font-black ">Time Tracking App</h1>
+        <h2 className="text-lightGray text-base font-normal">
+          Make an entry, track your hours!
+        </h2>
+      </div>
       <div className="flex max-w-7xl mx-auto h-full flex-grow">
         <div className="hidden md:block min-h-screen bg-lightGray">
           <SideBar></SideBar>
         </div>
         <div className="flex flex-col px-8 py-[32px]">
+          <div className="flex justify-center md:hidden mb-8">
+            <TimeEntryForm></TimeEntryForm>
+          </div>
           <div className="text-accent text-2xl font-bold mb-4">
             Time Entries
           </div>

@@ -32,7 +32,7 @@ const TaskCard = ({ hours, desc, project, timeStamp }) => {
             <div className="text-primary min-h-[24px] text-lg md:text-2xl">
               <TaskIcon />
             </div>
-            <p className="line-clamp-3 text-sm">{desc}</p>
+            <p className="line-clamp-3 text-sm md:text-base">{desc}</p>
           </div>
           <div className="flex-1"></div>
           <div className="flex justify-end">
