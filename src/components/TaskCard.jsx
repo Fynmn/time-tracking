@@ -7,7 +7,7 @@ const TaskCard = ({ hours, desc, project, timeStamp }) => {
   return (
     <>
       <FlatShadowCard
-        className="px-10 py-8 bg-white flex flex-col items-start gap-y-4 min-w-[380px] max-w-[380px] text-black"
+        className="px-10 py-8 bg-white flex flex-col items-start gap-y-4 min-w-[336px] max-w-[336px] text-black"
         flatOnMouseDown={true}
       >
         <div className="flex gap-x-2 items-center w-full">
@@ -22,7 +22,7 @@ const TaskCard = ({ hours, desc, project, timeStamp }) => {
             </p>
           </div>
         </div>
-        <div className="flex flex-col gap-y-2 text-base font-light min-h-[112px] max-h-[112px] w-full">
+        <div className="flex flex-col gap-y-2 text-base font-light min-h-[96px] max-h-[96px] w-full">
           <div className="flex text-start gap-x-1">
             <div className="text-primary min-h-[24px]">
               <TaskIcon size={24} />
