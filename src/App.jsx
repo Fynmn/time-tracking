@@ -55,7 +55,9 @@ const App = () => {
   return (
     <>
       <div className="flex max-w-7xl mx-auto">
-        <SideBar></SideBar>
+        <div className="hidden md:block">
+          <SideBar></SideBar>
+        </div>
         <div className="flex flex-col px-8 py-[32px]">
           {JSON.stringify(parsedGroupEntriesByWeekDescending)}
           <div className="text-accent text-2xl font-bold mb-4">
