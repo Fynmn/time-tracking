@@ -40,7 +40,7 @@ const TimeEntryForm = () => {
   const handleAddEntry = (e) => {
     e.preventDefault();
 
-    console.log([...timeEntries]);
+    // console.log([...timeEntries]);
     localStorage.setItem(
       "timeEntries",
       JSON.stringify([
@@ -54,10 +54,10 @@ const TimeEntryForm = () => {
       ])
     );
 
-    console.log(
-      "New Entries:",
-      JSON.parse(localStorage.getItem("timeEntries"))
-    );
+    // console.log(
+    //   "New Entries:",
+    //   JSON.parse(localStorage.getItem("timeEntries"))
+    // );
 
     window.location.reload();
   };
