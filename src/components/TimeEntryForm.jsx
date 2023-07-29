@@ -8,29 +8,31 @@ const TimeEntryForm = () => {
   const [project, setProject] = useState();
   const [timeEntries, setTimeEntries] = useState();
 
-  //   localStorage.setItem(
-  //     "timeEntries",
-  //     JSON.stringify([
-  //       {
-  //         hours: 6,
-  //         desc: "I created a custom card component",
-  //         project: "Project 1",
-  //         timeStamp: new Date().toISOString(),
-  //       },
-  //       {
-  //         hours: 4,
-  //         desc: "I created a custom button component",
-  //         project: "Project 1",
-  //         timeStamp: new Date().toISOString(),
-  //       },
-  //       {
-  //         hours: 2,
-  //         desc: "I fixed the responsiveness in different devices",
-  //         project: "Project 1",
-  //         timeStamp: new Date().toISOString(),
-  //       },
-  //     ])
-  //   );
+  // Uncomment code below for placeholder data
+
+  // localStorage.setItem(
+  //   "timeEntries",
+  //   JSON.stringify([
+  //     {
+  //       hours: 6,
+  //       desc: "I created a custom card component and then made http requests to render all the data for the card",
+  //       project: "Project 1",
+  //       timeStamp: new Date().toISOString(),
+  //     },
+  //     {
+  //       hours: 2,
+  //       desc: "I created a custom button component",
+  //       project: "Project 2",
+  //       timeStamp: new Date().toISOString(),
+  //     },
+  //     {
+  //       hours: 2,
+  //       desc: 'I fixed the responsiveness in different devices such as iPhone 14 Pro Max, iPad Air 5, Macbook Pro 15" and a Desktop Computer',
+  //       project: "Project 3",
+  //       timeStamp: new Date().toISOString(),
+  //     },
+  //   ])
+  // );
 
   useEffect(() => {
     const entries = JSON.parse(localStorage.getItem("timeEntries")) || [];
