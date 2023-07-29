@@ -1,4 +1,4 @@
-import PieChart from "./components/PieChart";
+import DoughnutChart from "./components/DoughnutChart";
 import SideBar from "./components/SideBar";
 import TaskCard from "./components/TaskCard";
 
@@ -114,13 +114,13 @@ const App = () => {
                   </div>
                   <div className="flex flex-wrap gap-x-8 gap-y-4">
                     <div className="max-h-fit max-w-[200px] ">
-                      <PieChart
+                      <DoughnutChart
                         values={[
                           array["totalHoursPerProject"]["Project 1"],
                           array["totalHoursPerProject"]["Project 2"],
                           array["totalHoursPerProject"]["Project 3"],
                         ]}
-                      ></PieChart>
+                      ></DoughnutChart>
                     </div>
                     {array["entries"].map((item, itemIndex) => (
                       <TaskCard key={itemIndex} {...item}></TaskCard>
