@@ -63,8 +63,8 @@ const SideNavbar = () => {
           topRight: false,
         }}
         size={{ width: width, height: "100%" }}
-        maxWidth="360px"
-        minWidth="207px"
+        maxWidth="418px"
+        minWidth="418px"
         handleClasses={{
           right:
             "hover:bg-blue-300 active:bg-primary-500 transition relative z-20",
