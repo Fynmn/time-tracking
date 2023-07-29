@@ -25,13 +25,26 @@ const calculateWeekNumber = (entry) => {
 // Step 3: Group the entries based on their week numbers.
 const groupEntriesByWeek = (entries) => {
   const groups = {};
+
   entries.forEach((entry) => {
     const weekNumber = calculateWeekNumber(entry);
     if (!groups[weekNumber]) {
-      groups[weekNumber] = [];
+      groups[weekNumber] = {
+        entries: [],
+        totalHoursPerProject: {},
+      };
     }
-    groups[weekNumber].push(entry);
+
+    groups[weekNumber].entries.push(entry);
+
+    const { project, hours } = entry;
+    if (!groups[weekNumber].totalHoursPerProject[project]) {
+      groups[weekNumber].totalHoursPerProject[project] = hours;
+    } else {
+      groups[weekNumber].totalHoursPerProject[project] += hours;
+    }
   });
+
   return groups;
 };
 
@@ -44,7 +57,12 @@ const sortGroups = (groups) => {
 // Step 5: Return the groups as an array.
 const groupEntriesByWeekDescending = (entries) => {
   const groups = groupEntriesByWeek(entries);
-  return sortGroups(groups);
+  const sortedGroups = sortGroups(groups);
+
+  return sortedGroups.map((group) => ({
+    totalHoursPerProject: group.totalHoursPerProject,
+    entries: group.entries,
+  }));
 };
 
 // Step 6: Parse data from local storage.
@@ -74,6 +92,7 @@ const App = () => {
             null,
             2
           )} */}
+          {/* {JSON.stringify(parsedGroupEntriesByWeekDescending())} */}
           <div className="flex flex-col flex-wrap gap-y-8">
             {localStorage.getItem("timeEntries") &&
               parsedGroupEntriesByWeekDescending().map((array, index) => (
@@ -95,9 +114,15 @@ const App = () => {
                   </div>
                   <div className="flex flex-wrap gap-x-8 gap-y-4">
                     <div className="max-h-fit max-w-[200px] ">
-                      <PieChart values={[300, 50, 100]}></PieChart>
+                      <PieChart
+                        values={[
+                          array["totalHoursPerProject"]["Project 1"],
+                          array["totalHoursPerProject"]["Project 2"],
+                          array["totalHoursPerProject"]["Project 3"],
+                        ]}
+                      ></PieChart>
                     </div>
-                    {array.map((item, itemIndex) => (
+                    {array["entries"].map((item, itemIndex) => (
                       <TaskCard key={itemIndex} {...item}></TaskCard>
                     ))}
                   </div>
