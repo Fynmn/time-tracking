@@ -6,7 +6,7 @@ import { followCursor } from "tippy.js";
 import { CgPushChevronLeft as CloseIcon } from "react-icons/cg";
 import ShortcutToolTip from "./ShortcutToolTip";
 
-const SideNavbar = () => {
+const SideBar = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [width, setWidth] = useState(250);
 
@@ -94,11 +94,11 @@ const SideNavbar = () => {
             <CloseIcon size="1.2rem" className="text-gray-700" />
           </button>
         </ShortcutToolTip>
-        {/* Logo */}
-        <div className="bg-blue-300 min-h-screen">Test</div>
+
+        <div className="bg-primary min-h-screen"></div>
       </Resizable>
     </div>
   );
 };
 
-export default SideNavbar;
+export default SideBar;
