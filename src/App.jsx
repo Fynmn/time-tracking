@@ -54,8 +54,8 @@ const parsedGroupEntriesByWeekDescending = groupEntriesByWeekDescending(
 const App = () => {
   return (
     <>
-      <div className="flex max-w-7xl mx-auto">
-        <div className="hidden md:block">
+      <div className="flex max-w-7xl mx-auto h-full flex-grow">
+        <div className="hidden md:block min-h-screen bg-lightGray">
           <SideBar></SideBar>
         </div>
         <div className="flex flex-col px-8 py-[32px]">

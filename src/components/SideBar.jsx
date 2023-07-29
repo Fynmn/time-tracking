@@ -51,7 +51,7 @@ const SideBar = () => {
     );
   }
   return (
-    <div className="text-sm max-h-screen">
+    <div className="text-sm">
       <Resizable
         enable={{
           bottom: false,
@@ -65,7 +65,7 @@ const SideBar = () => {
         }}
         size={{ width: width, height: "100%" }}
         maxWidth="418px"
-        minWidth="418px"
+        minWidth="360px"
         handleClasses={{
           right:
             "hover:bg-blue-300 active:bg-primary-500 transition relative z-20",
@@ -96,7 +96,7 @@ const SideBar = () => {
           </button>
         </ShortcutToolTip>
 
-        <div className="bg-lightGray h-full min-h-screen">
+        <div className="bg-lightGray h-full">
           <div className="flex flex-col px-8 pt-8 pb-4 gap-y-5">
             <div className="">
               <h1 className="text-primary text-2xl font-bold">
