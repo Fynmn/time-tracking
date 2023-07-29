@@ -112,8 +112,8 @@ const App = () => {
                       </p>
                     )}
                   </div>
-                  <div className="flex flex-wrap gap-x-8 gap-y-4">
-                    <div className="flex justify-center max-h-[220px] min-w-[336px] max-w-[336px]">
+                  <div className="flex flex-wrap gap-x-8 gap-y-4 justify-center md:justify-start">
+                    <div className="flex justify-center max-h-[220px] min-w-[260px] max-w-[260px] md:min-w-[336px] md:max-w-[336px]">
                       <DoughnutChart
                         values={[
                           array["totalHoursPerProject"]["Project 1"],

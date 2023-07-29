@@ -7,31 +7,39 @@ const TaskCard = ({ hours, desc, project, timeStamp }) => {
   return (
     <>
       <FlatShadowCard
-        className="px-10 py-8 bg-white flex flex-col items-start gap-y-4 min-w-[336px] max-w-[336px] text-black"
+        className="px-6 py-6 md:px-10 md:py-8 bg-white flex flex-col items-start gap-y-4 min-w-[260px] max-w-[260px] md:min-w-[336px] md:max-w-[336px] text-black"
         flatOnMouseDown={true}
       >
         <div className="flex gap-x-2 items-center w-full">
-          <p className="text-lg leading-[29px] font-black">{project}</p>
+          <p className="text-base md:text-lg md:leading-[29px] font-black">
+            {project}
+          </p>
           <div className="flex-1"></div>
-          <div className="flex gap-x-1 justify-end">
-            <div style={{ color: "#ADB6C3" }}>
-              <HoursIcon size={24} />
+          <div className="flex gap-x-1 justify-end items-center">
+            <div className="text-lg md:text-2xl" style={{ color: "#ADB6C3" }}>
+              <HoursIcon />
             </div>
-            <p className="font-normal text-base" style={{ color: "#ADB6C3" }}>
+            <p
+              className="font-normal text-sm md:text-base"
+              style={{ color: "#ADB6C3" }}
+            >
               {hours === 1 ? hours + " hour" : hours + " hours"}
             </p>
           </div>
         </div>
         <div className="flex flex-col gap-y-2 text-base font-light min-h-[96px] max-h-[96px] w-full">
           <div className="flex text-start gap-x-1">
-            <div className="text-primary min-h-[24px]">
-              <TaskIcon size={24} />
+            <div className="text-primary min-h-[24px] text-lg md:text-2xl">
+              <TaskIcon />
             </div>
-            <p className="line-clamp-3">{desc}</p>
+            <p className="line-clamp-3 text-sm">{desc}</p>
           </div>
           <div className="flex-1"></div>
           <div className="flex justify-end">
-            <p className="font-normal text-base" style={{ color: "#ADB6C3" }}>
+            <p
+              className="font-normal text-sm md:text-base"
+              style={{ color: "#ADB6C3" }}
+            >
               {timeStamp}
             </p>
           </div>
