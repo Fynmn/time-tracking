@@ -17,11 +17,11 @@ const TaskCard = ({ hours, desc, project, timeStamp }) => {
           </p>
           <div className="flex-1"></div>
           <div className="flex gap-x-1 justify-end items-center">
-            <div className="text-lg md:text-2xl" style={{ color: "#ADB6C3" }}>
+            <div className="text-base md:text-xl" style={{ color: "#ADB6C3" }}>
               <HoursIcon />
             </div>
             <p
-              className="font-normal text-sm md:text-base"
+              className="font-normal text-xs md:text-sm"
               style={{ color: "#ADB6C3" }}
             >
               {hours === 1 ? hours + " hour" : hours + " hours"}
@@ -38,7 +38,7 @@ const TaskCard = ({ hours, desc, project, timeStamp }) => {
           <div className="flex-1"></div>
           <div className="flex justify-end">
             <p
-              className="font-normal text-xs md:text-sm"
+              className="font-normal text-[10px] md:text-[11px]"
               style={{ color: "#ADB6C3" }}
             >
               {format(new Date(timeStamp), "MMMM DD, YYYY, hh:mm A")}
