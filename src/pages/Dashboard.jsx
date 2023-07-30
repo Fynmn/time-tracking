@@ -3,6 +3,8 @@ import DropDownProfile from "../components/DropDownProfile";
 import SideBar from "../components/SideBar";
 import TaskCard from "../components/TaskCard";
 import TimeEntryForm from "../components/TimeEntryForm";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
 // Step 1: Parse the timestamp string into a JavaScript Date object.
 const parseTimestamp = (timestamp) => {
@@ -79,6 +81,38 @@ function parsedGroupEntriesByWeekDescending() {
 }
 
 const Dashboard = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref);
+
+  const taskCardVariants = {
+    hidden: {
+      y: 0.1,
+    },
+    visible: {
+      y: 0,
+      transition: {
+        delay: 0.2,
+        staggerChildren: 0.2,
+        when: "beforeChildren",
+      },
+    },
+  };
+
+  const taskCardChildVariants = {
+    hidden: {
+      y: -35,
+      opacity: 0,
+    },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        ease: "easeOut",
+        duration: 0.5,
+      },
+    },
+  };
+
   return (
     <>
       <div className="flex flex-col items-center w-full bg-accent py-8 md:hidden">
@@ -109,7 +143,8 @@ const Dashboard = () => {
             2
           )} */}
           {/* {JSON.stringify(parsedGroupEntriesByWeekDescending())} */}
-          <div className="flex flex-col flex-wrap gap-y-8">
+
+          <div className="flex flex-col flex-wrap gap-y-8" ref={ref}>
             {localStorage.getItem("timeEntries") &&
               parsedGroupEntriesByWeekDescending().map((array, index) => (
                 <div key={index} className="">
@@ -128,20 +163,40 @@ const Dashboard = () => {
                       </p>
                     )}
                   </div>
-                  <div className="flex flex-wrap gap-x-8 gap-y-4 justify-center md:justify-start">
-                    <div className="flex justify-center max-h-[220px] min-w-[260px] max-w-[260px] md:min-w-[336px] md:max-w-[336px]">
-                      <DoughnutChart
-                        values={[
-                          array["totalHoursPerProject"]["Project 1"],
-                          array["totalHoursPerProject"]["Project 2"],
-                          array["totalHoursPerProject"]["Project 3"],
-                        ]}
-                      ></DoughnutChart>
+                  <motion.div
+                    variants={taskCardVariants}
+                    initial="hidden"
+                    animate={isInView ? "visible" : "hidden"}
+                    className=""
+                    viewport={{ once: true }}
+                  >
+                    <div className="flex flex-wrap gap-x-8 gap-y-4 justify-center md:justify-start">
+                      <motion.span
+                        variants={taskCardChildVariants}
+                        viewport={{ once: true }}
+                        key={index}
+                      >
+                        <div className="flex justify-center max-h-[220px] min-w-[260px] max-w-[260px] md:min-w-[336px] md:max-w-[336px]">
+                          <DoughnutChart
+                            values={[
+                              array["totalHoursPerProject"]["Project 1"],
+                              array["totalHoursPerProject"]["Project 2"],
+                              array["totalHoursPerProject"]["Project 3"],
+                            ]}
+                          ></DoughnutChart>
+                        </div>
+                      </motion.span>
+                      {array["entries"].map((item, itemIndex) => (
+                        <motion.span
+                          variants={taskCardChildVariants}
+                          viewport={{ once: true }}
+                          key={itemIndex}
+                        >
+                          <TaskCard key={itemIndex} {...item}></TaskCard>
+                        </motion.span>
+                      ))}
                     </div>
-                    {array["entries"].map((item, itemIndex) => (
-                      <TaskCard key={itemIndex} {...item}></TaskCard>
-                    ))}
-                  </div>
+                  </motion.div>
                 </div>
               ))}
           </div>
