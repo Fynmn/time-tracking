@@ -38,7 +38,7 @@ const TaskCard = ({ hours, desc, project, timeStamp }) => {
           <div className="flex-1"></div>
           <div className="flex justify-end">
             <p
-              className="font-normal text-sm md:text-base"
+              className="font-normal text-xs md:text-sm"
               style={{ color: "#ADB6C3" }}
             >
               {format(new Date(timeStamp), "MMMM DD, YYYY, hh:mm A")}
