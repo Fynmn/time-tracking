@@ -1,9 +1,22 @@
 const LoginForm = () => {
   return (
     <>
-      <section className="bg-secondary dark:bg-gray-900">
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+      <section className="min-h-screen bg-secondary dark:bg-gray-900 flex flex-col lg:flex-row md:px-16 md:gap-x-16 justify-center items-center">
+        <div className="flex flex-col items-center gap-y-4 pt-6">
+          <h1 className="text-white bg-primary rounded-lg p-1 md:p-2 text-2xl md:text-4xl font-black ">
+            Time Tracking App
+          </h1>
+          <div className="relative w-80 h-80 md:w-96 md:h-96">
+            <img
+              className="object-contain w-full h-full absolute"
+              src="/cuate.png"
+              alt=""
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-col px-6 py-8 lg:py-0">
+          <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 min-w-[340px] sm:max-w-xl sm:min-w-[420px] md:min-w-[480px] xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Sign in to your account
