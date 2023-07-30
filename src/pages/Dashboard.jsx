@@ -143,7 +143,6 @@ const Dashboard = () => {
             2
           )} */}
           {/* {JSON.stringify(parsedGroupEntriesByWeekDescending())} */}
-
           <div className="flex flex-col flex-wrap gap-y-8" ref={ref}>
             {localStorage.getItem("timeEntries") &&
               parsedGroupEntriesByWeekDescending().map((array, index) => (
@@ -176,7 +175,7 @@ const Dashboard = () => {
                         viewport={{ once: true }}
                         key={index}
                       >
-                        <div className="flex justify-center max-h-[220px] min-w-[260px] max-w-[260px] md:min-w-[336px] md:max-w-[336px]">
+                        <div className="flex justify-center max-h-[210px] min-w-[260px] max-w-[260px] md:min-w-[336px] md:max-w-[336px]">
                           <DoughnutChart
                             values={[
                               array["totalHoursPerProject"]["Project 1"],

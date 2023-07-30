@@ -11,6 +11,9 @@ const DoughnutChart = ({ values }) => {
       legend: {
         display: true,
         position: "left",
+        labels: {
+          boxWidth: 15,
+        },
       },
     },
   };
