@@ -1,4 +1,34 @@
+import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
+import { z } from "zod";
+import { toFormikValidationSchema } from "zod-formik-adapter";
+
 const LoginForm = () => {
+  const navigate = useNavigate();
+
+  const loginSchema = z.object({
+    email: z
+      .string()
+      .nonempty("Email is required")
+      .email({ message: "Must be a valid email" }),
+    password: z
+      .string()
+      .nonempty("Password is required")
+      .min(8, { message: "Password too short" }),
+  });
+
+  const { handleSubmit, handleChange, handleBlur, values, errors, touched } =
+    useFormik({
+      initialValues: {
+        email: "",
+        password: "",
+      },
+      validationSchema: toFormikValidationSchema(loginSchema),
+      onSubmit: () => {
+        navigate("/dashboard");
+      },
+    });
+
   return (
     <>
       <section className="min-h-screen bg-secondary dark:bg-gray-900 flex flex-col lg:flex-row md:px-16 md:gap-x-16 justify-center items-center">
@@ -21,37 +51,61 @@ const LoginForm = () => {
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Sign in to your account
               </h1>
-              <form className="space-y-4 md:space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
                 <div>
-                  <label
-                    htmlFor="email"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Your email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="name@company.com"
-                  />
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Your email
+                    </label>
+                    <input
+                      value={values.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      type="email"
+                      name="email"
+                      id="email"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="name@company.com"
+                    />
+                    {touched.email && errors.email ? (
+                      <div className="text-red-500 text-xs pt-1 w-full flex justify-end">
+                        {errors.email}
+                      </div>
+                    ) : (
+                      <div className="text-xs pt-1 invisible">email</div>
+                    )}
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="password"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Password
+                    </label>
+                    <input
+                      value={values.password}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      type="password"
+                      name="password"
+                      id="password"
+                      placeholder="••••••••"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    />
+                    {touched.password && errors.password ? (
+                      <div className="text-red-500 text-xs pt-1 w-full flex justify-end">
+                        {errors.password}
+                      </div>
+                    ) : (
+                      <div className="text-xs pt-1 invisible">password</div>
+                    )}
+                  </div>
                 </div>
-                <div>
-                  <label
-                    htmlFor="password"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="••••••••"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
-                </div>
+
                 <div className="flex items-center justify-between">
                   <div className="flex items-start">
                     <div className="flex items-center h-5">
@@ -80,12 +134,12 @@ const LoginForm = () => {
                 </div>
 
                 <div className="w-full flex justify-center">
-                  <a
-                    href="/dashboard"
-                    className="w-full text-white bg-primary hover:bg-primary-700 focus:ring-2 focus:outline-none focus:ring-accent font-medium rounded-lg text-sm px-5 py-2.5 mt-4 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                  <button
+                    type="submit"
+                    className="w-full text-white bg-primary hover:bg-accent focus:ring-2 focus:outline-none focus:ring-accent font-medium rounded-lg text-sm px-5 py-2.5 mt-4 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                   >
                     Sign in
-                  </a>
+                  </button>
                 </div>
 
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
