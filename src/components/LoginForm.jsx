@@ -2,9 +2,25 @@ import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
+import { AuthData } from "../auth/AuthWrapper";
+import { useState } from "react";
+import { useEffect } from "react";
+// import { AuthData } from "../auth/AuthWrapper";
+// import { useState } from "react";
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const { login } = AuthData();
+
+  useEffect(() => {
+    if (sessionStorage.getItem("email")) {
+      navigate("/dashboard");
+    } else {
+      navigate("/login");
+    }
+  }, []);
 
   const loginSchema = z.object({
     email: z
@@ -24,8 +40,13 @@ const LoginForm = () => {
         password: "",
       },
       validationSchema: toFormikValidationSchema(loginSchema),
-      onSubmit: () => {
-        navigate("/dashboard");
+      onSubmit: async ({ email, password }) => {
+        try {
+          await login(email, password);
+          // localStorage.setItem("email", email);
+        } catch (error) {
+          setErrorMessage(error);
+        }
       },
     });
 
@@ -102,6 +123,13 @@ const LoginForm = () => {
                       </div>
                     ) : (
                       <div className="text-xs pt-1 invisible">password</div>
+                    )}
+                    {errorMessage && errorMessage ? (
+                      <div className="text-red-500 text-xs w-full flex justify-end">
+                        {errorMessage}
+                      </div>
+                    ) : (
+                      <div className="invisible text-xs">errorMessage</div>
                     )}
                   </div>
                 </div>

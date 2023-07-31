@@ -5,6 +5,7 @@ import TaskCard from "../components/TaskCard";
 import TimeEntryForm from "../components/TimeEntryForm";
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 // Step 1: Parse the timestamp string into a JavaScript Date object.
 const parseTimestamp = (timestamp) => {
@@ -83,6 +84,11 @@ function parsedGroupEntriesByWeekDescending() {
 const Dashboard = () => {
   const ref = useRef(null);
   const isInView = useInView(ref);
+  const navigate = useNavigate();
+
+  if (!sessionStorage.getItem("email")) {
+    navigate("/login");
+  }
 
   const taskCardVariants = {
     hidden: {
@@ -115,92 +121,103 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center w-full bg-accent py-8 md:hidden">
-        <h1 className="text-white text-2xl font-black ">Time Tracking App</h1>
-        <h2 className="text-lightGray text-base font-normal">
-          Make an entry, track your hours!
-        </h2>
-      </div>
-      <div className="flex max-w-7xl mx-auto h-full flex-grow">
-        <div className="hidden md:block min-h-screen bg-lightGray">
-          <SideBar></SideBar>
-        </div>
-        <div className="flex flex-col px-8 py-[32px] w-full">
-          <div className="flex justify-center md:hidden mb-8">
-            <TimeEntryForm></TimeEntryForm>
+      {sessionStorage.getItem("email") ? (
+        <>
+          <div className="flex flex-col items-center w-full bg-accent py-8 md:hidden">
+            <h1 className="text-white text-2xl font-black ">
+              Time Tracking App
+            </h1>
+            <h2 className="text-lightGray text-base font-normal">
+              Make an entry, track your hours!
+            </h2>
           </div>
-          <div className="flex items-center mb-4">
-            <div className="flex-grow text-accent text-2xl font-bold ">
-              Time Entries
+          <div className="flex max-w-7xl mx-auto h-full flex-grow">
+            <div className="hidden md:block min-h-screen bg-lightGray">
+              <SideBar></SideBar>
             </div>
-            <div className="flex justify-end">
-              <DropDownProfile></DropDownProfile>
-            </div>
-          </div>
-          {/* {JSON.stringify(
+            <div className="flex flex-col px-8 py-[32px] w-full">
+              <div className="flex justify-center md:hidden mb-8">
+                <TimeEntryForm></TimeEntryForm>
+              </div>
+              <div className="flex items-center mb-4">
+                <div className="flex-grow text-accent text-2xl font-bold ">
+                  Time Entries
+                </div>
+                {/* Context: {user.email} Session Storage:{" "}
+                {sessionStorage.getItem("email")} */}
+                <div className="flex justify-end">
+                  {/* User isAuthenticated {JSON.stringify(user.isAuthenticated)} */}
+                  <DropDownProfile></DropDownProfile>
+                </div>
+              </div>
+              {/* {JSON.stringify(
             JSON.parse(localStorage.getItem("timeEntries")),
             null,
             2
           )} */}
-          {/* {JSON.stringify(parsedGroupEntriesByWeekDescending())} */}
-          <div className="flex flex-col flex-wrap gap-y-8" ref={ref}>
-            {localStorage.getItem("timeEntries") &&
-              parsedGroupEntriesByWeekDescending().map((array, index) => (
-                <div key={index} className="">
-                  <div>
-                    {index === 0 ? (
-                      <p className="text-darkGray font-medium text-base">
-                        This week
-                      </p>
-                    ) : index === 1 ? (
-                      <p className="text-darkGray font-medium text-base">
-                        {index} week ago
-                      </p>
-                    ) : (
-                      <p className="text-darkGray font-medium text-base">
-                        {index} weeks ago
-                      </p>
-                    )}
-                  </div>
-                  <motion.div
-                    variants={taskCardVariants}
-                    initial="hidden"
-                    animate={isInView ? "visible" : "hidden"}
-                    className=""
-                    viewport={{ once: true }}
-                  >
-                    <div className="flex flex-wrap gap-x-8 gap-y-4 justify-center md:justify-start">
-                      <motion.span
-                        variants={taskCardChildVariants}
+              {/* {JSON.stringify(parsedGroupEntriesByWeekDescending())} */}
+              <div className="flex flex-col flex-wrap gap-y-8" ref={ref}>
+                {localStorage.getItem("timeEntries") &&
+                  parsedGroupEntriesByWeekDescending().map((array, index) => (
+                    <div key={index} className="">
+                      <div>
+                        {index === 0 ? (
+                          <p className="text-darkGray font-medium text-base">
+                            This week
+                          </p>
+                        ) : index === 1 ? (
+                          <p className="text-darkGray font-medium text-base">
+                            {index} week ago
+                          </p>
+                        ) : (
+                          <p className="text-darkGray font-medium text-base">
+                            {index} weeks ago
+                          </p>
+                        )}
+                      </div>
+                      <motion.div
+                        variants={taskCardVariants}
+                        initial="hidden"
+                        animate={isInView ? "visible" : "hidden"}
+                        className=""
                         viewport={{ once: true }}
-                        key={index}
                       >
-                        <div className="flex justify-center max-h-[210px] min-w-[260px] max-w-[260px] md:min-w-[336px] md:max-w-[336px]">
-                          <DoughnutChart
-                            values={[
-                              array["totalHoursPerProject"]["Project 1"],
-                              array["totalHoursPerProject"]["Project 2"],
-                              array["totalHoursPerProject"]["Project 3"],
-                            ]}
-                          ></DoughnutChart>
+                        <div className="flex flex-wrap gap-x-8 gap-y-4 justify-center md:justify-start">
+                          <motion.span
+                            variants={taskCardChildVariants}
+                            viewport={{ once: true }}
+                            key={index}
+                          >
+                            <div className="flex justify-center max-h-[210px] min-w-[260px] max-w-[260px] md:min-w-[336px] md:max-w-[336px]">
+                              <DoughnutChart
+                                values={[
+                                  array["totalHoursPerProject"]["Project 1"],
+                                  array["totalHoursPerProject"]["Project 2"],
+                                  array["totalHoursPerProject"]["Project 3"],
+                                ]}
+                              ></DoughnutChart>
+                            </div>
+                          </motion.span>
+                          {array["entries"].map((item, itemIndex) => (
+                            <motion.span
+                              variants={taskCardChildVariants}
+                              viewport={{ once: true }}
+                              key={itemIndex}
+                            >
+                              <TaskCard key={itemIndex} {...item}></TaskCard>
+                            </motion.span>
+                          ))}
                         </div>
-                      </motion.span>
-                      {array["entries"].map((item, itemIndex) => (
-                        <motion.span
-                          variants={taskCardChildVariants}
-                          viewport={{ once: true }}
-                          key={itemIndex}
-                        >
-                          <TaskCard key={itemIndex} {...item}></TaskCard>
-                        </motion.span>
-                      ))}
+                      </motion.div>
                     </div>
-                  </motion.div>
-                </div>
-              ))}
+                  ))}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      ) : (
+        <div>Unauthenticated</div>
+      )}
     </>
   );
 };

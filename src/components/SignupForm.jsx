@@ -2,9 +2,18 @@ import { useFormik } from "formik";
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const SignupForm = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("email")) {
+      navigate("/login");
+    } else {
+      navigate("/signup");
+    }
+  }, []);
 
   const signupSchema = z
     .object({
@@ -35,6 +44,10 @@ const SignupForm = () => {
       },
       validationSchema: toFormikValidationSchema(signupSchema),
       onSubmit: () => {
+        localStorage.setItem("email", values.email);
+        localStorage.setItem("password", values.password);
+        sessionStorage.setItem("email", values.email);
+        sessionStorage.setItem("password", values.password);
         navigate("/dashboard");
       },
     });
