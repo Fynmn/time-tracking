@@ -37,37 +37,9 @@ const TimeEntryForm = () => {
   //   ])
   // );
 
-  // useEffect(() => {
-  //   const entries = JSON.parse(localStorage.getItem("timeEntries")) || [];
-  //   setTimeEntries(entries);
-  // }, []);
-
-  const fetchTimeEntriesFromLocalStorage = () => {
-    try {
-      const entries = JSON.parse(localStorage.getItem("timeEntries")) || [];
-      setTimeEntries(entries);
-    } catch (error) {
-      console.error("Error fetching time entries from Local Storage:", error);
-    }
-  };
-
   useEffect(() => {
-    // Fetch initial data from Local Storage on component mount
-    fetchTimeEntriesFromLocalStorage();
-
-    // Set up event listener to listen for changes in Local Storage
-    const handleStorageChange = (event) => {
-      if (event.key === "timeEntries") {
-        fetchTimeEntriesFromLocalStorage();
-      }
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-
-    // Clean up the event listener on component unmount
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
+    const entries = JSON.parse(localStorage.getItem("timeEntries")) || [];
+    setTimeEntries(entries);
   }, []);
 
   // const handleAddEntry = (e) => {
@@ -155,9 +127,9 @@ const TimeEntryForm = () => {
         {/* <div>{JSON.stringify(hours)}</div>
         <div>{JSON.stringify(description)}</div>
         <div>{JSON.stringify(project)}</div> */}
-        {values.hours}
+        {/* {values.hours}
         {values.description}
-        {values.project}
+        {values.project} */}
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-y-4">
           <div>
@@ -197,7 +169,7 @@ const TimeEntryForm = () => {
                 {errors.hours}
               </div>
             ) : (
-              <div className="text-xs invisible">hours</div>
+              <div className="text-xs hidden">hours</div>
             )}
           </div>
 
@@ -225,10 +197,8 @@ const TimeEntryForm = () => {
                       />
                     </svg>
                   </div>
-
-                  {values.project && values.project
-                    ? values.project
-                    : "Project 1"}
+                  Project 1
+                  {/* {values.project && values.project ? values.project : "Project"} */}
                 </Menu.Button>
               </div>
               <Menu.Items className="absolute z-10 right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
