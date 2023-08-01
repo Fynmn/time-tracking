@@ -111,7 +111,7 @@ const TimeEntryForm = () => {
         project: project,
         timeStamp: new Date().toISOString(),
       });
-      // window.location.reload();
+      window.location.reload();
     },
   });
 
