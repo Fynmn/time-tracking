@@ -4,7 +4,7 @@ import { MdTaskAlt as TaskIcon } from "react-icons/md";
 import { AiOutlineClockCircle as HoursIcon } from "react-icons/ai";
 import { format } from "fecha";
 
-const TaskCard = ({ hours, desc, project, timeStamp }) => {
+const TaskCard = ({ hours, description, project, timeStamp }) => {
   return (
     <>
       <FlatShadowCard
@@ -33,7 +33,7 @@ const TaskCard = ({ hours, desc, project, timeStamp }) => {
             <div className="text-primary min-h-[24px] text-lg md:text-2xl">
               <TaskIcon />
             </div>
-            <p className="line-clamp-3 text-sm md:text-base">{desc}</p>
+            <p className="line-clamp-3 text-sm md:text-base">{description}</p>
           </div>
           <div className="flex-1"></div>
           <div className="flex justify-end">
