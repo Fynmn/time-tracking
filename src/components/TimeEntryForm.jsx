@@ -1,11 +1,14 @@
 import { Menu } from "@headlessui/react";
+import { useFormik } from "formik";
 import { useEffect } from "react";
 import { useState } from "react";
+import { z } from "zod";
+import { toFormikValidationSchema } from "zod-formik-adapter";
 
 const TimeEntryForm = () => {
-  const [hours, setHours] = useState();
-  const [description, setDescription] = useState();
-  const [project, setProject] = useState();
+  // const [hours, setHours] = useState();
+  // const [description, setDescription] = useState();
+  // const [project, setProject] = useState();
   const [timeEntries, setTimeEntries] = useState();
 
   // Uncomment code below for placeholder data
@@ -34,35 +37,111 @@ const TimeEntryForm = () => {
   //   ])
   // );
 
+  // useEffect(() => {
+  //   const entries = JSON.parse(localStorage.getItem("timeEntries")) || [];
+  //   setTimeEntries(entries);
+  // }, []);
+
+  const fetchTimeEntriesFromLocalStorage = () => {
+    try {
+      const entries = JSON.parse(localStorage.getItem("timeEntries")) || [];
+      setTimeEntries(entries);
+    } catch (error) {
+      console.error("Error fetching time entries from Local Storage:", error);
+    }
+  };
+
   useEffect(() => {
-    const entries = JSON.parse(localStorage.getItem("timeEntries")) || [];
-    setTimeEntries(entries);
+    // Fetch initial data from Local Storage on component mount
+    fetchTimeEntriesFromLocalStorage();
+
+    // Set up event listener to listen for changes in Local Storage
+    const handleStorageChange = (event) => {
+      if (event.key === "timeEntries") {
+        fetchTimeEntriesFromLocalStorage();
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
   }, []);
 
-  const handleAddEntry = (e) => {
-    e.preventDefault();
+  // const handleAddEntry = (e) => {
+  //   e.preventDefault();
 
-    // console.log([...timeEntries]);
-    localStorage.setItem(
-      "timeEntries",
-      JSON.stringify([
-        ...timeEntries,
-        {
-          hours: parseInt(hours),
-          desc: description,
-          project: project,
-          timeStamp: new Date().toISOString(),
-        },
-      ])
-    );
+  //   // console.log([...timeEntries]);
+  //   localStorage.setItem(
+  //     "timeEntries",
+  //     JSON.stringify([
+  //       ...timeEntries,
+  //       {
+  //         hours: parseInt(hours),
+  //         desc: description,
+  //         project: project,
+  //         timeStamp: new Date().toISOString(),
+  //       },
+  //     ])
+  //   );
 
-    // console.log(
-    //   "New Entries:",
-    //   JSON.parse(localStorage.getItem("timeEntries"))
-    // );
+  // console.log(
+  //   "New Entries:",
+  //   JSON.parse(localStorage.getItem("timeEntries"))
+  // );
 
-    window.location.reload();
-  };
+  //   window.location.reload();
+  // };
+
+  const timeEntrySchema = z.object({
+    hours: z.number().min(0).max(24),
+    description: z.string(),
+    project: z.string(),
+    // timeStamp: z.string(),
+  });
+
+  const {
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    values,
+    errors,
+    touched,
+    setFieldValue,
+    // setFieldError,
+    // setFieldTouched,
+  } = useFormik({
+    initialValues: {
+      hours: undefined,
+      description: undefined,
+      project: "Project 1",
+      timeStamp: undefined,
+    },
+    validationSchema: toFormikValidationSchema(timeEntrySchema),
+    onSubmit: ({ hours, description, project }) => {
+      localStorage.setItem(
+        "timeEntries",
+        JSON.stringify([
+          ...timeEntries,
+          {
+            hours: hours,
+            description: description,
+            project: project,
+            timeStamp: new Date().toISOString(),
+          },
+        ])
+      );
+      setTimeEntries(...timeEntries, {
+        hours: hours,
+        description: description,
+        project: project,
+        timeStamp: new Date().toISOString(),
+      });
+      // window.location.reload();
+    },
+  });
 
   return (
     <>
@@ -76,8 +155,11 @@ const TimeEntryForm = () => {
         {/* <div>{JSON.stringify(hours)}</div>
         <div>{JSON.stringify(description)}</div>
         <div>{JSON.stringify(project)}</div> */}
+        {values.hours}
+        {values.description}
+        {values.project}
 
-        <form className="flex flex-col gap-y-4" onSubmit={handleAddEntry}>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-y-4">
           <div>
             <label
               htmlFor="hours"
@@ -101,15 +183,22 @@ const TimeEntryForm = () => {
                 </svg>
               </div>
               <input
-                onChange={(e) => setHours(e.target.value)}
-                required
+                value={values.hours}
+                onChange={handleChange}
+                onBlur={handleBlur}
                 type="number"
                 id="hours"
-                min={0}
                 className="bg-white border border-gray-300 text-gray-500 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 px-[14px] py-[10px]"
                 placeholder="Number of Hours"
               />
             </div>
+            {touched.hours && errors.hours ? (
+              <div className="text-xs text-red-500 w-full flex justify-end pt-1">
+                {errors.hours}
+              </div>
+            ) : (
+              <div className="text-xs invisible">hours</div>
+            )}
           </div>
 
           <div className="w-full">
@@ -136,14 +225,17 @@ const TimeEntryForm = () => {
                       />
                     </svg>
                   </div>
-                  {project && project ? project : "Project"}
+
+                  {values.project && values.project
+                    ? values.project
+                    : "Project 1"}
                 </Menu.Button>
               </div>
               <Menu.Items className="absolute z-10 right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <Menu.Item>
                   {({ active }) => (
                     <button
-                      onClick={() => setProject("Project 1")}
+                      onClick={() => setFieldValue("project", "Project 1")}
                       className={`${
                         active ? "bg-primary text-white" : "text-gray-900"
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
@@ -155,7 +247,7 @@ const TimeEntryForm = () => {
                 <Menu.Item>
                   {({ active }) => (
                     <button
-                      onClick={() => setProject("Project 2")}
+                      onClick={() => setFieldValue("project", "Project 2")}
                       className={`${
                         active ? "bg-primary text-white" : "text-gray-900"
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
@@ -167,7 +259,7 @@ const TimeEntryForm = () => {
                 <Menu.Item>
                   {({ active }) => (
                     <button
-                      onClick={() => setProject("Project 3")}
+                      onClick={() => setFieldValue("project", "Project 3")}
                       className={`${
                         active ? "bg-primary text-white" : "text-gray-900"
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
@@ -210,20 +302,28 @@ const TimeEntryForm = () => {
                 </svg>
               </div>
               <textarea
-                onChange={(e) => setDescription(e.target.value)}
-                required
+                value={values.description}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                name="description"
                 type="textarea"
                 id="task"
                 className="bg-white border border-gray-300 text-gray-500 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 px-[14px] py-[10px] min-h-[80px]"
                 placeholder="Task Description"
               />
             </div>
+            {touched.description && errors.description ? (
+              <div className="text-xs text-red-500 w-full flex justify-end pt-1">
+                {errors.description}
+              </div>
+            ) : (
+              <div className="text-xs invisible">description</div>
+            )}
           </div>
 
           <div className="flex justify-end">
             <button
               type="submit"
-              onClick={handleAddEntry}
               className="rounded-lg bg-primary text-white text-base font-semibold py-[10px] px-[18px]"
             >
               Add Time Entry

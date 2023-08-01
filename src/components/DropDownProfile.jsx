@@ -4,9 +4,11 @@ import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import { FiLogOut as LogOut } from "react-icons/fi";
+import { AuthData } from "../auth/AuthWrapper";
 
 const DropDownProfile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { user, logout } = AuthData();
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -36,15 +38,15 @@ const DropDownProfile = () => {
             <form className="px-1 py-1">
               <Menu.Item>
                 {({ active }) => (
-                  <a
-                    href="/login"
+                  <button
+                    onClick={logout}
                     className={`${
                       active ? "bg-primary text-white" : "text-black"
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                   >
                     <LogOut className="mr-2 h-5 w-5 " aria-hidden="true" />
                     Log-out
-                  </a>
+                  </button>
                 )}
               </Menu.Item>
             </form>
